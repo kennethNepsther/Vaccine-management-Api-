@@ -12,7 +12,7 @@ import java.util.List;
 
 @RestController
 @AllArgsConstructor
-@RequestMapping("/v1/product")
+@RequestMapping("/v1/vaccine")
 @CrossOrigin(origins = "*", maxAge = 3600)
 public class VaccineController {
 
@@ -20,22 +20,22 @@ public class VaccineController {
 
     @GetMapping("/{id}")
     public ResponseEntity<VaccineModel> findById(@PathVariable Long id) {
-        VaccineModel product = vaccineService.findById(id);
-        return ResponseEntity.ok((product));
+        VaccineModel vaccine = vaccineService.findById(id);
+        return ResponseEntity.ok((vaccine));
     }
 
     @GetMapping
     public ResponseEntity<List<VaccineModel>> findAll() {
-        List<VaccineModel> product = vaccineService.findAll();
-        return ResponseEntity.ok().body(product);
+        List<VaccineModel> vaccine = vaccineService.findAll();
+        return ResponseEntity.ok().body(vaccine);
         //return ResponseEntity.ok(product.stream().map(productDTO::new).collect(Collectors.toList()));
     }
 
     @PostMapping
-    public ResponseEntity<VaccineModel> create(@RequestBody VaccineModel product){
-        product = vaccineService.create(product);
-        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(product.getId()).toUri();
-        return ResponseEntity.created(uri).body(product);
+    public ResponseEntity<VaccineModel> create(@RequestBody VaccineModel vaccine){
+        vaccine = vaccineService.create(vaccine);
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(vaccine.getId()).toUri();
+        return ResponseEntity.created(uri).body(vaccine);
     }
 
     @DeleteMapping("/{id}")

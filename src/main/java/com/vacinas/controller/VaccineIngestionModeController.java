@@ -1,7 +1,7 @@
 package com.vacinas.controller;
 
-import com.vacinas.model.CategoryModel;
-import com.vacinas.service.CategoryService;
+import com.vacinas.model.VaccineIngestionMode;
+import com.vacinas.service.VaccineIngestionModeService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,33 +14,33 @@ import java.util.List;
 @AllArgsConstructor
 @RequestMapping("/v1/category")
 @CrossOrigin(origins = "*", maxAge = 3600)
-public class CategoryController {
+public class VaccineIngestionModeController {
 
-    final CategoryService categoryService;
+    final VaccineIngestionModeService vaccineIngestionModeService;
 
     @GetMapping("/{id}")
-    public ResponseEntity<CategoryModel> findById(@PathVariable Long id) {
-        CategoryModel category = categoryService.findById(id);
+    public ResponseEntity<VaccineIngestionMode> findById(@PathVariable Long id) {
+        VaccineIngestionMode category = vaccineIngestionModeService.findById(id);
         return ResponseEntity.ok((category));
     }
 
     @GetMapping
-    public ResponseEntity<List<CategoryModel>> findAll() {
-        List<CategoryModel> category = categoryService.findAll();
+    public ResponseEntity<List<VaccineIngestionMode>> findAll() {
+        List<VaccineIngestionMode> category = vaccineIngestionModeService.findAll();
         return ResponseEntity.ok().body(category);
         //return ResponseEntity.ok(product.stream().map(productDTO::new).collect(Collectors.toList()));
     }
 
     @PostMapping
-    public ResponseEntity<CategoryModel> create(@RequestBody CategoryModel category){
-        category = categoryService.create(category);
+    public ResponseEntity<VaccineIngestionMode> create(@RequestBody VaccineIngestionMode category){
+        category = vaccineIngestionModeService.create(category);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(category.getId()).toUri();
         return ResponseEntity.created(uri).body(category);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id){
-        categoryService.delete(id);
+        vaccineIngestionModeService.delete(id);
         return ResponseEntity.noContent().build();
 
     }
