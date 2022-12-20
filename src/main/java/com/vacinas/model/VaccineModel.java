@@ -6,6 +6,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -33,10 +34,10 @@ public class VaccineModel implements Serializable {
     private String manufacturer;
     @Column(nullable = false)
     @JsonFormat(pattern = "dd/MM/yyyy")
-    private Date manufactureDate;
+    private LocalDateTime manufactureDate;
     @Column(nullable = false)
     @JsonFormat(pattern = "dd/MM/yyyy")
-    private Date expirationDate;
+    private LocalDateTime expirationDate;
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private VaccineIntakeRoute intakeRoute;
