@@ -1,5 +1,6 @@
 package com.vacinas.service.impl;
 
+import com.vacinas.exception.ObjectNotFoundException;
 import com.vacinas.model.VaccineIngestionMode;
 import com.vacinas.repository.VaccineIngestionModeRepository;
 import com.vacinas.service.VaccineIngestionModeService;
@@ -18,7 +19,9 @@ public class VaccineIngestionModeServiceImpl implements VaccineIngestionModeServ
     @Override
     public VaccineIngestionMode findById(Long id) {
         Optional<VaccineIngestionMode> vaccineIngestionMode = vaccineIngestionModeRepository.findById(id);
-        return vaccineIngestionMode.orElse(null);    }
+        return vaccineIngestionMode.orElseThrow(()-> new ObjectNotFoundException("Não foi encontrado  objecto com o indetificador "+ id));
+
+    }
 
     @Override
     public List<VaccineIngestionMode> findAll() {

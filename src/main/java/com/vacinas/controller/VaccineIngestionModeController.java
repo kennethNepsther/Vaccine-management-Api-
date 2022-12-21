@@ -12,7 +12,7 @@ import java.util.List;
 
 @RestController
 @AllArgsConstructor
-@RequestMapping("/v1/category")
+@RequestMapping("/v1/ingestion")
 @CrossOrigin(origins = "*", maxAge = 3600)
 public class VaccineIngestionModeController {
 
@@ -20,22 +20,22 @@ public class VaccineIngestionModeController {
 
     @GetMapping("/{id}")
     public ResponseEntity<VaccineIngestionMode> findById(@PathVariable Long id) {
-        VaccineIngestionMode category = vaccineIngestionModeService.findById(id);
-        return ResponseEntity.ok((category));
+        VaccineIngestionMode ingestion = vaccineIngestionModeService.findById(id);
+        return ResponseEntity.ok((ingestion));
     }
 
     @GetMapping
     public ResponseEntity<List<VaccineIngestionMode>> findAll() {
-        List<VaccineIngestionMode> category = vaccineIngestionModeService.findAll();
-        return ResponseEntity.ok().body(category);
+        List<VaccineIngestionMode> ingestion = vaccineIngestionModeService.findAll();
+        return ResponseEntity.ok().body(ingestion);
         //return ResponseEntity.ok(product.stream().map(productDTO::new).collect(Collectors.toList()));
     }
 
     @PostMapping
-    public ResponseEntity<VaccineIngestionMode> create(@RequestBody VaccineIngestionMode category){
-        category = vaccineIngestionModeService.create(category);
-        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(category.getId()).toUri();
-        return ResponseEntity.created(uri).body(category);
+    public ResponseEntity<VaccineIngestionMode> create(@RequestBody VaccineIngestionMode ingestion){
+        ingestion = vaccineIngestionModeService.create(ingestion);
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(ingestion.getId()).toUri();
+        return ResponseEntity.created(uri).body(ingestion);
     }
 
     @DeleteMapping("/{id}")
