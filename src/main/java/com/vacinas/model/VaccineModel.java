@@ -37,6 +37,7 @@ public class VaccineModel implements Serializable {
     @Column(nullable = false)
     @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate expirationDate;
+
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private VaccineIntakeRoute intakeRoute;
