@@ -10,6 +10,8 @@ public interface VaccineService {
 
     List<VaccineModel> findAll();
 
+    List<VaccineModel> findByAllotment(String allotment);
+
     VaccineModel create(VaccineModel vaccineModel);
 
     VaccineModel update(Long id, VaccineModel vaccineModel);

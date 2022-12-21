@@ -31,6 +31,13 @@ public class VaccineController {
         //return ResponseEntity.ok(product.stream().map(productDTO::new).collect(Collectors.toList()));
     }
 
+    @GetMapping("/allotment/{allotment}")
+    public ResponseEntity<List<VaccineModel>> findAllotment(@PathVariable String allotment) {
+        List<VaccineModel> vaccine = vaccineService.findByAllotment(allotment);
+        return ResponseEntity.ok().body(vaccine);
+
+    }
+
     @PostMapping
     public ResponseEntity<VaccineModel> create(@RequestBody VaccineModel vaccine){
         vaccine = vaccineService.create(vaccine);
