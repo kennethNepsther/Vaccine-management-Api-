@@ -1,5 +1,6 @@
 package com.vacinas.service.impl;
 
+import com.vacinas.exception.ObjectNotFoundException;
 import com.vacinas.model.VaccineModel;
 import com.vacinas.repository.VaccineRepository;
 import com.vacinas.service.VaccineService;
@@ -16,8 +17,10 @@ public class VaccineServiceImpl implements VaccineService {
 
     @Override
     public VaccineModel findById(Long id) {
-        Optional<VaccineModel> newObj = vaccineRepository.findById(id);
-        return newObj.orElse(null);    }
+        Optional<VaccineModel> vaccine = vaccineRepository.findById(id);
+        return vaccine.orElseThrow(()-> new ObjectNotFoundException("Não foi encontrado  objecto com o indetificador "+ id ));
+    }
+
 
     @Override
     public List<VaccineModel> findAll() {
