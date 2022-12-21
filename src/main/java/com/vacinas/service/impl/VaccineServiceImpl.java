@@ -21,10 +21,18 @@ public class VaccineServiceImpl implements VaccineService {
         return vaccine.orElseThrow(()-> new ObjectNotFoundException("Não foi encontrado  objecto com o indetificador "+ id ));
     }
 
-
     @Override
     public List<VaccineModel> findAll() {
         return vaccineRepository.findAll();
+    }
+
+    @Override
+    public List<VaccineModel> findByAllotment(String allotment) {
+        List<VaccineModel> vaccineModels = vaccineRepository.findVaccineModelsByAllotment(allotment);
+        if(vaccineModels.isEmpty()){
+            throw new ObjectNotFoundException("Nenhum resultado foi encontrado com este numero de lote "+ allotment);
+        }
+        return vaccineModels;
     }
 
     @Override

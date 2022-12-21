@@ -27,7 +27,7 @@ public class VaccineModel implements Serializable {
     private String name;
     @Column(nullable = false)
     private String description;
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false)
     private String allotment;
     @Column(nullable = false)
     private String manufacturer;
