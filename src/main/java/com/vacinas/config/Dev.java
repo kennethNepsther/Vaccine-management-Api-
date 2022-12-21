@@ -9,6 +9,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 
+
 import java.time.LocalDate;
 import java.util.Random;
 
@@ -32,6 +33,7 @@ public class Dev {
         this.vaccineRepository = vaccineRepository;
         this.vaccineIngestionModeRepository = vaccineIngestionModeRepository;
     }
+
 
     @Bean
     public void startDB() {

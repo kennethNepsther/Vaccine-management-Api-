@@ -8,8 +8,6 @@ import org.springframework.format.annotation.DateTimeFormat;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.List;
 
 
@@ -40,6 +38,7 @@ public class VaccineModel implements Serializable {
     @Column(nullable = false)
     @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate expirationDate;
+
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private VaccineIntakeRoute intakeRoute;
