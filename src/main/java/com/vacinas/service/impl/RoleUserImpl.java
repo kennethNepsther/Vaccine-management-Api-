@@ -1,6 +1,5 @@
 package com.vacinas.service.impl;
 
-import com.vacinas.exception.ObjectNotFoundException;
 import com.vacinas.model.Role;
 import com.vacinas.model.User;
 import com.vacinas.model.dto.UserRoleDTO;
@@ -22,7 +21,7 @@ public class RoleUserImpl implements RoleUserService {
         List<Role> roles;
 
         if (userExists.isEmpty()) {
-            throw new ObjectNotFoundException("User does not exists!");
+            throw new Error("Utilizador existente");
         }
 
         roles = userRoleDTO.getIdsRoles().stream().map(Role::new).collect(Collectors.toList());
