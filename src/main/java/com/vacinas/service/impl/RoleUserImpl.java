@@ -4,6 +4,7 @@ import com.vacinas.model.Role;
 import com.vacinas.model.User;
 import com.vacinas.model.dto.UserRoleDTO;
 import com.vacinas.repository.UserRepository;
+import com.vacinas.service.RoleService;
 import com.vacinas.service.RoleUserService;
 import lombok.AllArgsConstructor;
 
@@ -12,32 +13,27 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @AllArgsConstructor
-public class RoleUserImpl implements RoleUserService {
+public class RoleUserImpl implements RoleService {
     final UserRepository userRepository;
 
+
     @Override
-    public User execute(UserRoleDTO userRoleDTO) {
-        Optional<User> userExists = userRepository.findById(userRoleDTO.getId());
-        List<Role> roles;
+    public Role create(Role role) {
+        return null;
+    }
 
-        if (userExists.isEmpty()) {
-            throw new Error("Utilizador existente");
-        }
+    @Override
+    public Role findById(Long id) {
+        return null;
+    }
 
-        roles = userRoleDTO.getIdsRoles().stream().map(Role::new).collect(Collectors.toList());
+    @Override
+    public List<Role> findAll() {
+        return null;
+    }
 
-        /* Alternatively
-        roles = userRoleDTO.getIdsRoles().stream().map(role -> {
-            return new Role(role);
-        }).collect(Collectors.toList());
-        */
-
-        User user = userExists.get();
-        user.setRoles(roles);
-
-        userRepository.save(user);
-
-        return user;
+    @Override
+    public void delete(Long id) {
 
     }
 }
