@@ -1,8 +1,8 @@
 package com.vacinas.service.impl;
 
+import com.vacinas.exception.DataIntegrityViolationException;
 import com.vacinas.exception.ObjectNotFoundException;
 import com.vacinas.model.User;
-import com.vacinas.model.VaccineModel;
 import com.vacinas.repository.UserRepository;
 import com.vacinas.service.UserService;
 import lombok.AllArgsConstructor;
@@ -31,7 +31,7 @@ public class UserServiceImpl implements UserService {
     public User create(User user) {
         User existsUser = userRepository.findByUsername(user.getUsername());
         if (existsUser != null) {
-            throw new Error("User already exists!");
+            throw new DataIntegrityViolationException("Já existe utilizador com este username");
         }
         user.setId(null);
         return userRepository.save(user);
