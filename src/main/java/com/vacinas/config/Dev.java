@@ -1,8 +1,12 @@
 package com.vacinas.config;
 
 import com.vacinas.enums.VaccineIntakeRoute;
+import com.vacinas.model.Role;
+import com.vacinas.model.User;
 import com.vacinas.model.VaccineIngestionMode;
 import com.vacinas.model.VaccineModel;
+import com.vacinas.repository.RoleRepository;
+import com.vacinas.repository.UserRepository;
 import com.vacinas.repository.VaccineIngestionModeRepository;
 import com.vacinas.repository.VaccineRepository;
 import org.springframework.context.annotation.Bean;
@@ -13,9 +17,13 @@ import org.springframework.context.annotation.Profile;
 import java.time.LocalDate;
 import java.util.Random;
 
+import static java.util.Arrays.asList;
+
 @Configuration
 @Profile("dev")
 public class Dev {
+    final UserRepository userRepository;
+    final RoleRepository roleRepository;
     final VaccineRepository vaccineRepository;
     final VaccineIngestionModeRepository vaccineIngestionModeRepository;
     String[] vaccineName = {"BCG", "Hepatite B", "Penta", "Polio inativada", "Polio oral", "Rotavírus",
@@ -29,14 +37,25 @@ public class Dev {
     String description = "dummy text of the printing and typesetting industry.";
     LocalDate manufactureDate = LocalDate.now();
     LocalDate expirationDate = manufactureDate.plusYears(8);
-    public Dev(VaccineRepository vaccineRepository, VaccineIngestionModeRepository vaccineIngestionModeRepository) {
+    public Dev(VaccineRepository vaccineRepository,VaccineIngestionModeRepository vaccineIngestionModeRepository,
+                UserRepository userRepository, RoleRepository roleRepository) {
         this.vaccineRepository = vaccineRepository;
         this.vaccineIngestionModeRepository = vaccineIngestionModeRepository;
+        this.userRepository = userRepository;
+        this.roleRepository = roleRepository;
     }
 
 
     @Bean
     public void startDB() {
+
+        var roleAdmin = new Role(null,"ROLE_ADMIN");
+        var roleUser = new Role(null,"ROLE_USER");
+        roleRepository.saveAll(asList(roleAdmin,roleUser));
+
+        var userAdmin = new User(null,"Kenneth Luzolo","kenneth","12345",null);
+        var userUser = new User(null,"Lando Luzolo","landinho","12345",null);
+        userRepository.saveAll(asList(userAdmin,userUser));
 
         var random = new Random();
 
