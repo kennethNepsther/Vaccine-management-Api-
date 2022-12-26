@@ -29,7 +29,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User create(User user) {
-        User existsUser = userRepository.findByUsername(user.getUsername());
+        User existsUser = userRepository.findByUsername(user.getUsername().trim());
         if (existsUser != null) {
             throw new DataIntegrityViolationException("Já existe utilizador com este username");
         }
