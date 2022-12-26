@@ -7,10 +7,12 @@ import com.vacinas.model.dto.UserRoleDTO;
 import com.vacinas.repository.UserRepository;
 import com.vacinas.service.AssignRolesToUserService;
 import lombok.AllArgsConstructor;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+@Service
 @AllArgsConstructor
 public class AssignRolesToUserServiceImpl implements AssignRolesToUserService {
 

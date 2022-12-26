@@ -1,6 +1,8 @@
 package com.vacinas.controller;
 
 import com.vacinas.model.User;
+import com.vacinas.model.dto.UserRoleDTO;
+import com.vacinas.service.AssignRolesToUserService;
 import com.vacinas.service.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +19,8 @@ import java.util.List;
 public class UserController {
 
     final UserService userService;
+
+    final AssignRolesToUserService assignRolesToUserService;
 
     @GetMapping("/{id}")
     public ResponseEntity<User> findById(@PathVariable Long id) {
@@ -36,6 +40,11 @@ public class UserController {
         user = userService.create(user);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(user.getId()).toUri();
         return ResponseEntity.created(uri).body(user);
+    }
+
+    @PostMapping("/set-role")
+    public ResponseEntity<User> setUserRole(@RequestBody UserRoleDTO userRoleDto){
+        return ResponseEntity.ok().body(assignRolesToUserService.execute(userRoleDto));
     }
 
     @DeleteMapping("/{id}")
