@@ -1,5 +1,6 @@
 package com.vacinas.config;
 
+import com.sun.xml.bind.v2.runtime.output.Encoded;
 import com.vacinas.enums.VaccineIntakeRoute;
 import com.vacinas.model.Role;
 import com.vacinas.model.User;
@@ -12,9 +13,11 @@ import com.vacinas.repository.VaccineRepository;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Random;
 
 import static java.util.Arrays.asList;
@@ -53,8 +56,8 @@ public class Dev {
         var roleUser = new Role(null,"ROLE_USER");
         roleRepository.saveAll(asList(roleAdmin,roleUser));
 
-        var userAdmin = new User(null,"Kenneth Luzolo","kenneth","12345",null);
-        var userUser = new User(null,"Lando Luzolo","landinho","12345",null);
+        var userAdmin = new User(null,"Kenneth Luzolo","kenneth", new BCryptPasswordEncoder().encode("12345"), List.of(roleAdmin));
+        var userUser = new User(null,"Lando Luzolo","landinho",new BCryptPasswordEncoder().encode("12345"),List.of(roleUser));
         userRepository.saveAll(asList(userAdmin,userUser));
 
         var random = new Random();
