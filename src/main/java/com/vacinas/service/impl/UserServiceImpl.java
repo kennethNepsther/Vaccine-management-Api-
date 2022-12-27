@@ -6,6 +6,7 @@ import com.vacinas.model.User;
 import com.vacinas.repository.UserRepository;
 import com.vacinas.service.UserService;
 import lombok.AllArgsConstructor;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -34,6 +35,7 @@ public class UserServiceImpl implements UserService {
             throw new DataIntegrityViolationException("Já existe utilizador com este username");
         }
         user.setId(null);
+        user.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
         return userRepository.save(user);
     }
 
