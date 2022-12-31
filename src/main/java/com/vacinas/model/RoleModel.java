@@ -9,15 +9,15 @@ import javax.persistence.*;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "roles")
-public class Role {
+@Table(name = "role")
+public class RoleModel {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
   private String name;
 
-  public Role(Long id) {
+  public RoleModel(Long id) {
     this.id = id;
   }
 

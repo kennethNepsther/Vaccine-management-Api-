@@ -1,7 +1,7 @@
 package com.vacinas.service.impl;
 
 import com.vacinas.exception.ObjectNotFoundException;
-import com.vacinas.model.Role;
+import com.vacinas.model.RoleModel;
 import com.vacinas.repository.RoleRepository;
 import com.vacinas.service.RoleService;
 import lombok.AllArgsConstructor;
@@ -16,20 +16,20 @@ public class RoleServiceImpl implements RoleService {
     final RoleRepository roleRepository;
 
     @Override
-    public Role create(Role role) {
-        role.setId(null);
-        return roleRepository.save(role);
+    public RoleModel create(RoleModel roleModel) {
+        roleModel.setId(null);
+        return roleRepository.save(roleModel);
     }
 
     @Override
-    public Role findById(Long id) {
-        Optional<Role> role = roleRepository.findById(id);
+    public RoleModel findById(Long id) {
+        Optional<RoleModel> role = roleRepository.findById(id);
         return role.orElseThrow(()
                 -> new ObjectNotFoundException("Não foi encontrado  objecto com o indetificador " + id));
     }
 
     @Override
-    public List<Role> findAll() {
+    public List<RoleModel> findAll() {
         return roleRepository.findAll();
     }
 

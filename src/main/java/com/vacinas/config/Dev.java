@@ -1,10 +1,9 @@
 package com.vacinas.config;
 
-import com.sun.xml.bind.v2.runtime.output.Encoded;
 import com.vacinas.enums.VaccineIntakeRoute;
-import com.vacinas.model.Role;
-import com.vacinas.model.User;
-import com.vacinas.model.VaccineIngestionMode;
+import com.vacinas.model.RoleModel;
+import com.vacinas.model.UserModel;
+import com.vacinas.model.VaccineIngestionModeModel;
 import com.vacinas.model.VaccineModel;
 import com.vacinas.repository.RoleRepository;
 import com.vacinas.repository.UserRepository;
@@ -53,12 +52,12 @@ public class Dev {
     @Bean
     public void startDB() {
 
-        var roleAdmin = new Role(null,"ROLE_ADMIN");
-        var roleUser = new Role(null,"ROLE_USER");
+        var roleAdmin = new RoleModel(null,"ROLE_ADMIN");
+        var roleUser = new RoleModel(null,"ROLE_USER");
         roleRepository.saveAll(asList(roleAdmin,roleUser));
 
-        var userAdmin = new User(null,"Kenneth Luzolo","kenneth", new BCryptPasswordEncoder().encode("12345"), List.of(roleAdmin));
-        var userUser = new User(null,"Lando Luzolo","landinho",new BCryptPasswordEncoder().encode("12345"),List.of(roleUser));
+        var userAdmin = new UserModel(null,"Kenneth Luzolo","kenneth", new BCryptPasswordEncoder().encode("12345"), List.of(roleAdmin));
+        var userUser = new UserModel(null,"Lando Luzolo","landinho",new BCryptPasswordEncoder().encode("12345"),List.of(roleUser));
         userRepository.saveAll(asList(userAdmin,userUser));
 
         var random = new Random();
@@ -69,7 +68,7 @@ public class Dev {
             int allotment = random.nextInt();
             int n3 = random.nextInt(4);
 
-            var ingestionMode1 = new VaccineIngestionMode(null, age[n1], schedule, description, null);
+            var ingestionMode1 = new VaccineIngestionModeModel(null, age[n1], schedule, description, null);
 
             vaccineIngestionModeRepository.save(ingestionMode1);
 

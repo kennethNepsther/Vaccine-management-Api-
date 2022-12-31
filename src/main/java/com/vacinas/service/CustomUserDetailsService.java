@@ -1,7 +1,7 @@
-package com.vacinas.config.security;
+package com.vacinas.service;
 
-import com.vacinas.exception.DataIntegrityViolationException;
-import com.vacinas.model.User;
+import com.vacinas.model.UserModel;
+import com.vacinas.model.UserPrincipal;
 import com.vacinas.repository.UserRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -20,12 +20,12 @@ public class CustomUserDetailsService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
-        User existsUser = userRepository.finByUsernameFetchRoles(username);
+        UserModel existsUserModel = userRepository.finByUsernameFetchRoles(username);
 
-        //User existsUser = userRepository.findByUsername(username);
-        if (existsUser == null) {
-            throw new DataIntegrityViolationException("Não existe este utilizador");
+        //UserModel existsUserModel = userRepository.findByUsername(username);
+        if (existsUserModel == null) {
+            throw new NullPointerException("Não existe este utilizador");
         }
-        return UserPrincipal.create(existsUser);
+        return UserPrincipal.create(existsUserModel);
     }
 }

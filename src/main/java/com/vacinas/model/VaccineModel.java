@@ -43,7 +43,7 @@ public class VaccineModel implements Serializable {
     private VaccineIntakeRoute intakeRoute;
 
     @OneToMany(mappedBy = "vaccine", cascade = CascadeType.ALL)
-    private List<VaccineIngestionMode> ingestionModes;
+    private List<VaccineIngestionModeModel> ingestionModes;
 
 
 

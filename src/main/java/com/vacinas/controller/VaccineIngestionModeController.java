@@ -1,6 +1,6 @@
 package com.vacinas.controller;
 
-import com.vacinas.model.VaccineIngestionMode;
+import com.vacinas.model.VaccineIngestionModeModel;
 import com.vacinas.service.VaccineIngestionModeService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -21,20 +21,20 @@ public class VaccineIngestionModeController {
     final VaccineIngestionModeService vaccineIngestionModeService;
 
     @GetMapping("/{id}")
-    public ResponseEntity<VaccineIngestionMode> findById(@PathVariable Long id) {
-        VaccineIngestionMode ingestion = vaccineIngestionModeService.findById(id);
+    public ResponseEntity<VaccineIngestionModeModel> findById(@PathVariable Long id) {
+        VaccineIngestionModeModel ingestion = vaccineIngestionModeService.findById(id);
         return ResponseEntity.ok((ingestion));
     }
 
     @GetMapping
-    public ResponseEntity<List<VaccineIngestionMode>> findAll() {
-        List<VaccineIngestionMode> ingestion = vaccineIngestionModeService.findAll();
+    public ResponseEntity<List<VaccineIngestionModeModel>> findAll() {
+        List<VaccineIngestionModeModel> ingestion = vaccineIngestionModeService.findAll();
         return ResponseEntity.ok().body(ingestion);
         //return ResponseEntity.ok(product.stream().map(productDTO::new).collect(Collectors.toList()));
     }
 
     @PostMapping
-    public ResponseEntity<VaccineIngestionMode> create(@RequestBody VaccineIngestionMode ingestion){
+    public ResponseEntity<VaccineIngestionModeModel> create(@RequestBody VaccineIngestionModeModel ingestion){
         ingestion = vaccineIngestionModeService.create(ingestion);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(ingestion.getId()).toUri();
         return ResponseEntity.created(uri).body(ingestion);
