@@ -1,7 +1,7 @@
 package com.vacinas.model.dto.request;
 
-import com.vacinas.model.Role;
-import com.vacinas.model.User;
+import com.vacinas.model.RoleModel;
+import com.vacinas.model.UserModel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -17,14 +17,14 @@ public class UserRequestDto {
     private String name;
     private String username;
     private String password;
-    private List<Role> roles;
+    private List<RoleModel> roleModels;
 
-    public User build(){
-        return new User()
+    public UserModel build(){
+        return new UserModel()
                 .setName(this.name)
                 .setUsername(this.username)
                 .setPassword(this.password)
-                .setRoles(this.roles);
+                .setRoleModels(this.roleModels);
     }
 
 }

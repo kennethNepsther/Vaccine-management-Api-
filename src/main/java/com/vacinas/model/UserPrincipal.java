@@ -1,6 +1,5 @@
-package com.vacinas.config.security;
+package com.vacinas.model;
 
-import com.vacinas.model.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -14,18 +13,18 @@ public class UserPrincipal implements UserDetails {
     private final String password;
     private final Collection<? extends GrantedAuthority> authorities;
 
-    public UserPrincipal(User user){
-        this.username = user.getUsername();
-        this.password = user.getPassword();
+    public UserPrincipal(UserModel userModel){
+        this.username = userModel.getUsername();
+        this.password = userModel.getPassword();
         List<SimpleGrantedAuthority> authorityList;
 
-        authorityList = user.getRoles().stream()
+        authorityList = userModel.getRoleModels().stream()
                 .map(role -> new SimpleGrantedAuthority(role.getName())).collect(Collectors.toList());
         this.authorities = authorityList;
     }
 
-    public  static UserPrincipal create (User user){
-        return new UserPrincipal(user);
+    public  static UserPrincipal create (UserModel userModel){
+        return new UserPrincipal(userModel);
     }
 
     @Override

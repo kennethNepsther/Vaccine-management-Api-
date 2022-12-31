@@ -1,7 +1,6 @@
 package com.vacinas.controller;
 
-import com.vacinas.model.Role;
-import com.vacinas.model.User;
+import com.vacinas.model.RoleModel;
 import com.vacinas.service.RoleService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -23,22 +22,22 @@ public class RoleController {
 
 
     @GetMapping("/{id}")
-    public ResponseEntity<Role> findById(@PathVariable Long id) {
-        Role role = roleService.findById(id);
-        return ResponseEntity.ok((role));
+    public ResponseEntity<RoleModel> findById(@PathVariable Long id) {
+        RoleModel roleModel = roleService.findById(id);
+        return ResponseEntity.ok((roleModel));
     }
 
     @GetMapping
-    public ResponseEntity<List<Role>> findAll() {
-        List<Role> roles = roleService.findAll();
-        return ResponseEntity.ok().body(roles);
+    public ResponseEntity<List<RoleModel>> findAll() {
+        List<RoleModel> roleModels = roleService.findAll();
+        return ResponseEntity.ok().body(roleModels);
     }
 
     @PostMapping
-    public ResponseEntity<Role> create(@RequestBody Role role){
-        role = roleService.create(role);
-        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(role.getId()).toUri();
-        return ResponseEntity.created(uri).body(role);
+    public ResponseEntity<RoleModel> create(@RequestBody RoleModel roleModel){
+        roleModel = roleService.create(roleModel);
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(roleModel.getId()).toUri();
+        return ResponseEntity.created(uri).body(roleModel);
     }
 
     @DeleteMapping("/{id}")

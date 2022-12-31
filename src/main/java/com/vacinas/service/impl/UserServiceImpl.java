@@ -2,7 +2,7 @@ package com.vacinas.service.impl;
 
 import com.vacinas.exception.DataIntegrityViolationException;
 import com.vacinas.exception.ObjectNotFoundException;
-import com.vacinas.model.User;
+import com.vacinas.model.UserModel;
 import com.vacinas.repository.UserRepository;
 import com.vacinas.service.UserService;
 import com.vacinas.util.Assert;
@@ -20,33 +20,33 @@ public class UserServiceImpl implements UserService {
 
 
     @Override
-    public User findById(Long id) {
+    public UserModel findById(Long id) {
         if(Assert.isNull(id)) {
             throw new NullPointerException("O id  é obrigatorio");
         }
-        Optional<User> user = userRepository.findById(id);
+        Optional<UserModel> user = userRepository.findById(id);
         return user.orElseThrow(() -> new ObjectNotFoundException("Não foi encontrado  objecto com o indetificador " + id));
     }
 
     @Override
-    public List<User> findAll() {
+    public List<UserModel> findAll() {
         return userRepository.findAll();
     }
 
     @Override
-    public User create(User user) {
-        User existsUser = userRepository.findByUsername(user.getUsername().trim());
-        if (existsUser != null) {
+    public UserModel create(UserModel userModel) {
+        UserModel existsUserModel = userRepository.findByUsername(userModel.getUsername().trim());
+        if (existsUserModel != null) {
             throw new DataIntegrityViolationException("Já existe utilizador com este username");
         }
 
-        user.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
-        return userRepository.save(user);
+        userModel.setPassword(new BCryptPasswordEncoder().encode(userModel.getPassword()));
+        return userRepository.save(userModel);
 
     }
 
     @Override
-    public User update(Long id, User user) {
+    public UserModel update(Long id, UserModel userModel) {
         return null;
     }
 

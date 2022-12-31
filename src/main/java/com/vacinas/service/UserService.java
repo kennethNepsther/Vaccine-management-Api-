@@ -1,18 +1,18 @@
 package com.vacinas.service;
 
-import com.vacinas.model.User;
+import com.vacinas.model.UserModel;
 
 import java.util.List;
 
 public interface UserService {
 
-    User findById(Long id);
+    UserModel findById(Long id);
 
-    List<User> findAll();
+    List<UserModel> findAll();
 
-    User create(User user);
+    UserModel create(UserModel userModel);
 
-    User update(Long id, User user);
+    UserModel update(Long id, UserModel userModel);
 
     void delete(Long id);
 }

@@ -1,16 +1,16 @@
 package com.vacinas.service;
 
-import com.vacinas.model.Role;
+import com.vacinas.model.RoleModel;
 
 import java.util.List;
 
 public interface RoleService {
 
-    Role create(Role role);
+    RoleModel create(RoleModel roleModel);
 
-    Role findById(Long id);
+    RoleModel findById(Long id);
 
-    List<Role> findAll();
+    List<RoleModel> findAll();
 
     void delete(Long id);
 }

@@ -1,7 +1,7 @@
 package com.vacinas.service.impl;
 
 import com.vacinas.exception.ObjectNotFoundException;
-import com.vacinas.model.VaccineIngestionMode;
+import com.vacinas.model.VaccineIngestionModeModel;
 import com.vacinas.repository.VaccineIngestionModeRepository;
 import com.vacinas.service.VaccineIngestionModeService;
 import lombok.AllArgsConstructor;
@@ -17,25 +17,25 @@ public class VaccineIngestionModeServiceImpl implements VaccineIngestionModeServ
     final VaccineIngestionModeRepository vaccineIngestionModeRepository;
 
     @Override
-    public VaccineIngestionMode findById(Long id) {
-        Optional<VaccineIngestionMode> vaccineIngestionMode = vaccineIngestionModeRepository.findById(id);
+    public VaccineIngestionModeModel findById(Long id) {
+        Optional<VaccineIngestionModeModel> vaccineIngestionMode = vaccineIngestionModeRepository.findById(id);
         return vaccineIngestionMode.orElseThrow(()-> new ObjectNotFoundException("Não foi encontrado  objecto com o indetificador "+ id));
 
     }
 
     @Override
-    public List<VaccineIngestionMode> findAll() {
+    public List<VaccineIngestionModeModel> findAll() {
         return vaccineIngestionModeRepository.findAll();
     }
 
     @Override
-    public VaccineIngestionMode create(VaccineIngestionMode vaccineIngestionMode) {
-        vaccineIngestionMode.setId(null);
-        return vaccineIngestionModeRepository.save(vaccineIngestionMode);
+    public VaccineIngestionModeModel create(VaccineIngestionModeModel vaccineIngestionModeModel) {
+        vaccineIngestionModeModel.setId(null);
+        return vaccineIngestionModeRepository.save(vaccineIngestionModeModel);
     }
 
     @Override
-    public VaccineIngestionMode update(Long id, VaccineIngestionMode vaccineIngestionMode) {
+    public VaccineIngestionModeModel update(Long id, VaccineIngestionModeModel vaccineIngestionModeModel) {
         return null;
     }
 

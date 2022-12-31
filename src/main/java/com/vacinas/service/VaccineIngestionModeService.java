@@ -1,18 +1,18 @@
 package com.vacinas.service;
 
-import com.vacinas.model.VaccineIngestionMode;
+import com.vacinas.model.VaccineIngestionModeModel;
 
 import java.util.List;
 
 public interface VaccineIngestionModeService {
 
-    VaccineIngestionMode findById(Long id);
+    VaccineIngestionModeModel findById(Long id);
 
-    List<VaccineIngestionMode> findAll();
+    List<VaccineIngestionModeModel> findAll();
 
-    VaccineIngestionMode create(VaccineIngestionMode vaccineIngestionMode);
+    VaccineIngestionModeModel create(VaccineIngestionModeModel vaccineIngestionModeModel);
 
-    VaccineIngestionMode update(Long id, VaccineIngestionMode vaccineIngestionMode);
+    VaccineIngestionModeModel update(Long id, VaccineIngestionModeModel vaccineIngestionModeModel);
 
     void delete(Long id);
 }

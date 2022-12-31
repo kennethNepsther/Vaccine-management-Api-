@@ -1,6 +1,6 @@
 package com.vacinas.controller;
 
-import com.vacinas.model.User;
+import com.vacinas.model.UserModel;
 import com.vacinas.model.dto.request.UserRequestDto;
 import com.vacinas.model.dto.request.UserRoleDTO;
 import com.vacinas.model.dto.response.UserResponseDto;
@@ -28,26 +28,26 @@ public class UserController {
     final AssignRolesToUserService assignRolesToUserService;
 
     @GetMapping("/{id}")
-    public ResponseEntity<User> findById(@PathVariable Long id) {
-        User user = userService.findById(id);
-        return ResponseEntity.ok((user));
+    public ResponseEntity<UserModel> findById(@PathVariable Long id) {
+        UserModel userModel = userService.findById(id);
+        return ResponseEntity.ok((userModel));
     }
 
     @GetMapping
     public ResponseEntity<List<UserResponseDto>> findAll() {
-        List<User> users = userService.findAll();
-        return ResponseEntity.ok().body(UserResponseDto.convertToList(users));
+        List<UserModel> userModels = userService.findAll();
+        return ResponseEntity.ok().body(UserResponseDto.convertToList(userModels));
     }
 
     @PostMapping
-    public ResponseEntity<User> create(@RequestBody UserRequestDto userRequestDto){
-        User user = userService.create(userRequestDto.build());
-        URI uri = addIdToCurrentUrlPath(user.getId());
-        return ResponseEntity.created(uri).body(user);
+    public ResponseEntity<UserModel> create(@RequestBody UserRequestDto userRequestDto){
+        UserModel userModel = userService.create(userRequestDto.build());
+        URI uri = addIdToCurrentUrlPath(userModel.getId());
+        return ResponseEntity.created(uri).body(userModel);
     }
 
     @PostMapping("/set-role")
-    public ResponseEntity<User> setUserRole(@RequestBody UserRoleDTO userRoleDto){
+    public ResponseEntity<UserModel> setUserRole(@RequestBody UserRoleDTO userRoleDto){
         return ResponseEntity.ok().body(assignRolesToUserService.execute(userRoleDto));
     }
 

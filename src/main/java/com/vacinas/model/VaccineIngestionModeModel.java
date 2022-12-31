@@ -13,7 +13,7 @@ import java.io.Serializable;
 @NoArgsConstructor
 @Table(name = "ingestion_mode")
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-public class VaccineIngestionMode implements Serializable {
+public class VaccineIngestionModeModel implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @EqualsAndHashCode.Include

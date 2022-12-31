@@ -1,8 +1,8 @@
 package com.vacinas.service.impl;
 
 import com.vacinas.exception.DataIntegrityViolationException;
-import com.vacinas.model.Role;
-import com.vacinas.model.User;
+import com.vacinas.model.RoleModel;
+import com.vacinas.model.UserModel;
 import com.vacinas.model.dto.request.UserRoleDTO;
 import com.vacinas.repository.UserRepository;
 import com.vacinas.service.AssignRolesToUserService;
@@ -19,23 +19,23 @@ public class AssignRolesToUserServiceImpl implements AssignRolesToUserService {
     final UserRepository userRepository;
 
     @Override
-    public User execute(UserRoleDTO userRoleDTO) {
-            Optional<User> userExists = userRepository.findById(userRoleDTO.getId());
-            List<Role> roles;
+    public UserModel execute(UserRoleDTO userRoleDTO) {
+            Optional<UserModel> userExists = userRepository.findById(userRoleDTO.getId());
+            List<RoleModel> roleModels;
 
             if (userExists.isEmpty()) {
                 throw new DataIntegrityViolationException("Permissão já existente");
             }
 
-            roles = userRoleDTO.getIdsRoles().stream().map(Role::new).collect(Collectors.toList());
+            roleModels = userRoleDTO.getIdsRoles().stream().map(RoleModel::new).collect(Collectors.toList());
 
 
-            User user = userExists.get();
-            user.setRoles(roles);
+            UserModel userModel = userExists.get();
+            userModel.setRoleModels(roleModels);
 
-            userRepository.save(user);
+            userRepository.save(userModel);
 
-            return user;
+            return userModel;
 
         }
     }

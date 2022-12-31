@@ -1,5 +1,6 @@
 package com.vacinas.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import lombok.experimental.Accessors;
 
@@ -11,10 +12,10 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "users")
+@Table(name = "user")
 @Accessors(chain = true)
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-public class User {
+public class UserModel {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,8 +27,9 @@ public class User {
   private String username;
 
   @Column(nullable = false)
+  @JsonIgnore
   private String password;
 
   @ManyToMany
-  private List<Role> roles;
+  private List<RoleModel> roleModels;
 }
