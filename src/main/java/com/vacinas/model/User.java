@@ -1,6 +1,7 @@
 package com.vacinas.model;
 
 import lombok.*;
+import lombok.experimental.Accessors;
 
 import javax.persistence.*;
 import java.util.List;
@@ -11,6 +12,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "users")
+@Accessors(chain = true)
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class User {
 
@@ -22,6 +24,7 @@ public class User {
   private String name;
   @Column(nullable = false, unique = true)
   private String username;
+
   @Column(nullable = false)
   private String password;
 

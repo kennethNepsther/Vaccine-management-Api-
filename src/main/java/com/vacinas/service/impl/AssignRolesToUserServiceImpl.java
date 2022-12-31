@@ -3,7 +3,7 @@ package com.vacinas.service.impl;
 import com.vacinas.exception.DataIntegrityViolationException;
 import com.vacinas.model.Role;
 import com.vacinas.model.User;
-import com.vacinas.model.dto.UserRoleDTO;
+import com.vacinas.model.dto.request.UserRoleDTO;
 import com.vacinas.repository.UserRepository;
 import com.vacinas.service.AssignRolesToUserService;
 import lombok.AllArgsConstructor;
@@ -29,11 +29,6 @@ public class AssignRolesToUserServiceImpl implements AssignRolesToUserService {
 
             roles = userRoleDTO.getIdsRoles().stream().map(Role::new).collect(Collectors.toList());
 
-        /* Alternatively
-        roles = userRoleDTO.getIdsRoles().stream().map(role -> {
-            return new Role(role);
-        }).collect(Collectors.toList());
-        */
 
             User user = userExists.get();
             user.setRoles(roles);
