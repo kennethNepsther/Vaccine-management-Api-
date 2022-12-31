@@ -1,5 +1,7 @@
 package com.vacinas.exception;
 
+import com.vacinas.error.StandardError;
+import com.vacinas.error.ValidationError;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;

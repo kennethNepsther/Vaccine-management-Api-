@@ -1,4 +1,4 @@
-package com.vacinas.model.dto;
+package com.vacinas.model.dto.request;
 
 import lombok.Data;
 

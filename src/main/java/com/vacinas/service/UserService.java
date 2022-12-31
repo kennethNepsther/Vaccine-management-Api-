@@ -1,7 +1,6 @@
 package com.vacinas.service;
 
 import com.vacinas.model.User;
-import com.vacinas.model.VaccineModel;
 
 import java.util.List;
 

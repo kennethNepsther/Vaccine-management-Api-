@@ -1,4 +1,4 @@
-package com.vacinas.exception;
+package com.vacinas.error;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

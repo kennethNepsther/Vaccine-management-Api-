@@ -5,6 +5,7 @@ import com.vacinas.exception.ObjectNotFoundException;
 import com.vacinas.model.User;
 import com.vacinas.repository.UserRepository;
 import com.vacinas.service.UserService;
+import com.vacinas.util.Assert;
 import lombok.AllArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -17,8 +18,12 @@ import java.util.Optional;
 public class UserServiceImpl implements UserService {
     final UserRepository userRepository;
 
+
     @Override
     public User findById(Long id) {
+        if(Assert.isNull(id)) {
+            throw new NullPointerException("O id  é obrigatorio");
+        }
         Optional<User> user = userRepository.findById(id);
         return user.orElseThrow(() -> new ObjectNotFoundException("Não foi encontrado  objecto com o indetificador " + id));
     }
@@ -34,9 +39,10 @@ public class UserServiceImpl implements UserService {
         if (existsUser != null) {
             throw new DataIntegrityViolationException("Já existe utilizador com este username");
         }
-        user.setId(null);
+
         user.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
         return userRepository.save(user);
+
     }
 
     @Override

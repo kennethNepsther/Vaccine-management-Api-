@@ -1,17 +1,20 @@
 package com.vacinas.controller;
 
 import com.vacinas.model.User;
-import com.vacinas.model.dto.UserRoleDTO;
+import com.vacinas.model.dto.request.UserRequestDto;
+import com.vacinas.model.dto.request.UserRoleDTO;
+import com.vacinas.model.dto.response.UserResponseDto;
 import com.vacinas.service.AssignRolesToUserService;
 import com.vacinas.service.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
 import java.util.List;
+
+import static com.vacinas.util.UriUtil.addIdToCurrentUrlPath;
 
 @RestController
 @AllArgsConstructor
@@ -31,16 +34,15 @@ public class UserController {
     }
 
     @GetMapping
-    public ResponseEntity<List<User>> findAll() {
+    public ResponseEntity<List<UserResponseDto>> findAll() {
         List<User> users = userService.findAll();
-        return ResponseEntity.ok().body(users);
-        //return ResponseEntity.ok(product.stream().map(productDTO::new).collect(Collectors.toList()));
+        return ResponseEntity.ok().body(UserResponseDto.convertToList(users));
     }
 
     @PostMapping
-    public ResponseEntity<User> create(@RequestBody User user){
-        user = userService.create(user);
-        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(user.getId()).toUri();
+    public ResponseEntity<User> create(@RequestBody UserRequestDto userRequestDto){
+        User user = userService.create(userRequestDto.build());
+        URI uri = addIdToCurrentUrlPath(user.getId());
         return ResponseEntity.created(uri).body(user);
     }
 
@@ -55,4 +57,5 @@ public class UserController {
         return ResponseEntity.noContent().build();
 
     }
+
 }

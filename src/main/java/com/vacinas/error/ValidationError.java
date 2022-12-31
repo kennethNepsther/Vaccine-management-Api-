@@ -1,5 +1,7 @@
-package com.vacinas.exception;
+package com.vacinas.error;
 
+import com.vacinas.error.FieldMessages;
+import com.vacinas.error.StandardError;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

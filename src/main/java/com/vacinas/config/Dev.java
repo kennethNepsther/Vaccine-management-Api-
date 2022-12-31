@@ -10,6 +10,7 @@ import com.vacinas.repository.RoleRepository;
 import com.vacinas.repository.UserRepository;
 import com.vacinas.repository.VaccineIngestionModeRepository;
 import com.vacinas.repository.VaccineRepository;
+import com.vacinas.util.DateTimeUtil;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
@@ -75,7 +76,7 @@ public class Dev {
 
             var vaccine1 = new VaccineModel(null, vaccineName[n1], description, Integer.toString(allotment),
                     "PALANCA",
-                    manufactureDate, expirationDate, intakeRoute[n3], null);
+                    DateTimeUtil.getCurrentDate(), expirationDate, intakeRoute[n3], null);
             vaccineRepository.save(vaccine1);
 
 
