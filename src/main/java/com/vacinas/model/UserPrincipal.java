@@ -18,7 +18,7 @@ public class UserPrincipal implements UserDetails {
         this.password = userModel.getPassword();
         List<SimpleGrantedAuthority> authorityList;
 
-        authorityList = userModel.getRoleModels().stream()
+        authorityList = userModel.getRoles().stream()
                 .map(role -> new SimpleGrantedAuthority(role.getName())).collect(Collectors.toList());
         this.authorities = authorityList;
     }

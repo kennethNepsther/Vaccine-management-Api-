@@ -10,9 +10,13 @@ public interface UserService {
 
     List<UserModel> findAll();
 
+    UserModel finByUsernameFetchRoles(String username);
+
+    void findByUsername(String username);
+
     UserModel create(UserModel userModel);
 
-    UserModel update(Long id, UserModel userModel);
+    UserModel update(UserModel userModel);
 
     void delete(Long id);
 }

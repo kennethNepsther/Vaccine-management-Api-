@@ -1,6 +1,6 @@
 package com.vacinas.config.security;
 
-import com.vacinas.service.CustomUserDetailsService;
+import com.vacinas.service.impl.CustomUserDetailsService;
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.authentication.AuthenticationManager;

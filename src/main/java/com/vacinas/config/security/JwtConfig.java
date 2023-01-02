@@ -14,7 +14,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Service
-public class JwtUtil {
+public class JwtConfig {
 
     private String secret;
     private int jwtExpirationInMs;

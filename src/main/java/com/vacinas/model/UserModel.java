@@ -31,5 +31,5 @@ public class UserModel {
   private String password;
 
   @ManyToMany
-  private List<RoleModel> roleModels;
+  private List<RoleModel> roles;
 }

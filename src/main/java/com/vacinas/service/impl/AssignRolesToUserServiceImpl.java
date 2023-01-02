@@ -21,17 +21,17 @@ public class AssignRolesToUserServiceImpl implements AssignRolesToUserService {
     @Override
     public UserModel execute(UserRoleDTO userRoleDTO) {
             Optional<UserModel> userExists = userRepository.findById(userRoleDTO.getId());
-            List<RoleModel> roleModels;
+            List<RoleModel> roles;
 
             if (userExists.isEmpty()) {
                 throw new DataIntegrityViolationException("Permissão já existente");
             }
 
-            roleModels = userRoleDTO.getIdsRoles().stream().map(RoleModel::new).collect(Collectors.toList());
+            roles = userRoleDTO.getIdsRoles().stream().map(RoleModel::new).collect(Collectors.toList());
 
 
             UserModel userModel = userExists.get();
-            userModel.setRoleModels(roleModels);
+            userModel.setRoles(roles);
 
             userRepository.save(userModel);
 

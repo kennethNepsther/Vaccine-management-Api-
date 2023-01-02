@@ -7,6 +7,8 @@ import com.vacinas.model.dto.response.UserResponseDto;
 import com.vacinas.service.AssignRolesToUserService;
 import com.vacinas.service.UserService;
 import lombok.AllArgsConstructor;
+import org.springframework.beans.BeanUtils;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -51,10 +53,21 @@ public class UserController {
         return ResponseEntity.ok().body(assignRolesToUserService.execute(userRoleDto));
     }
 
+    @PutMapping
+    public ResponseEntity<UserModel> update(@RequestBody  UserRequestDto userRequestDto){
+        var userModel = new UserModel();
+        BeanUtils.copyProperties(userRequestDto, userModel);
+        userModel.setId(userRequestDto.getId());
+        userModel.setName(userRequestDto.getName());
+        userModel.setUsername(userRequestDto.getUsername());
+        return ResponseEntity.ok().body(userService.update(userModel));
+    }
+
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id){
+    public ResponseEntity<Object> delete(@PathVariable Long id){
         userService.delete(id);
-        return ResponseEntity.noContent().build();
+        //return ResponseEntity.noContent().build();
+        return ResponseEntity.status(HttpStatus.OK).body("Eliminado com sucesso.");
 
     }
 
