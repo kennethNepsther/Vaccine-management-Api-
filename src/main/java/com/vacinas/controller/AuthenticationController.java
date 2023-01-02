@@ -1,6 +1,6 @@
 package com.vacinas.controller;
 
-import com.vacinas.config.security.JwtUtil;
+import com.vacinas.config.security.JwtConfig;
 import com.vacinas.exception.CredentialInvalidException;
 import com.vacinas.exception.UserDisabledException;
 import com.vacinas.model.dto.request.AuthenticationRequest;
@@ -26,10 +26,10 @@ public class AuthenticationController {
 
     final AuthenticationManager authenticationManager;
 
-    final JwtUtil jwtTokenUtil;
+    final JwtConfig jwtToken;
 
    @PostMapping
-    public ResponseEntity<?> createAuthenticationToken(@RequestBody AuthenticationRequest authenticationRequest) {
+    public ResponseEntity<AuthenticationResponse> createAuthenticationToken(@RequestBody AuthenticationRequest authenticationRequest) {
         try {
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
                     authenticationRequest.getUsername(), authenticationRequest.getPassword()));
@@ -40,7 +40,7 @@ public class AuthenticationController {
         }
         final UserDetails userDetails = userDetailsService.loadUserByUsername(authenticationRequest.getUsername());
 
-        final String token = jwtTokenUtil.generateToken(userDetails);
+        final String token = jwtToken.generateToken(userDetails);
 
         return ResponseEntity.ok(new AuthenticationResponse(token));
     }
