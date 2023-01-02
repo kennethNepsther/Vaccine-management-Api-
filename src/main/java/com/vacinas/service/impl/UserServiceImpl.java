@@ -34,20 +34,39 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserModel create(UserModel userModel) {
-        UserModel existsUserModel = userRepository.findByUsername(userModel.getUsername().trim());
-        if (existsUserModel != null) {
-            throw new DataIntegrityViolationException("Já existe utilizador com este username");
-        }
+    public UserModel finByUsernameFetchRoles(String username) {
 
-        userModel.setPassword(new BCryptPasswordEncoder().encode(userModel.getPassword()));
-        return userRepository.save(userModel);
+        UserModel user = userRepository.finByUsernameFetchRoles(username);
+
+        if (Assert.isNull(user)) {
+            throw new ObjectNotFoundException("Não existe este utilizador");
+
+        }
+        return user;
+    }
+
+    @Override
+    public void findByUsername(String username) {
+        UserModel user = userRepository.findByUsername(username.trim());
+        if (Assert.isNotNull(user)) {
+            throw new DataIntegrityViolationException("Já  existe um utilizador com este user name");
+        }
 
     }
 
     @Override
-    public UserModel update(Long id, UserModel userModel) {
-        return null;
+    public UserModel create(UserModel user) {
+        findByUsername(user.getUsername());
+        user.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
+        return userRepository.save(user);
+
+    }
+
+    @Override
+    public UserModel update(UserModel userModel) {
+        findById(userModel.getId());
+        findByUsername(userModel.getUsername());
+        return userRepository.save(userModel);
     }
 
 

@@ -14,17 +14,21 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class UserRequestDto {
+    private Long id;
     private String name;
     private String username;
     private String password;
-    private List<RoleModel> roleModels;
+    private List<RoleModel> roles;
 
-    public UserModel build(){
+    public UserModel build() {
         return new UserModel()
                 .setName(this.name)
                 .setUsername(this.username)
                 .setPassword(this.password)
-                .setRoleModels(this.roleModels);
+                .setRoles(this.roles);
     }
+
+
+
 
 }

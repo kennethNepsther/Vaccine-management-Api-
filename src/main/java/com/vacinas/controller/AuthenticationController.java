@@ -5,7 +5,7 @@ import com.vacinas.exception.CredentialInvalidException;
 import com.vacinas.exception.UserDisabledException;
 import com.vacinas.model.dto.request.AuthenticationRequest;
 import com.vacinas.model.dto.response.AuthenticationResponse;
-import com.vacinas.service.CustomUserDetailsService;
+import com.vacinas.service.impl.CustomUserDetailsService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;

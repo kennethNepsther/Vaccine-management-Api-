@@ -10,6 +10,6 @@ import org.springframework.stereotype.Repository;
 public interface UserRepository extends JpaRepository<UserModel, Long> {
 
     UserModel findByUsername(String username);
-@Query("SELECT u FROM  UserModel u JOIN FETCH u.roleModels WHERE u.username = :username")
+@Query("SELECT u FROM  UserModel u JOIN FETCH u.roles WHERE u.username = :username")
 UserModel finByUsernameFetchRoles(@Param("username") String username);
 }
