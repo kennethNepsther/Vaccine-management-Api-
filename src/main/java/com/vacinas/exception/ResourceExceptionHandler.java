@@ -33,4 +33,16 @@ public class ResourceExceptionHandler {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
     }
 
+    @ExceptionHandler(UserDisabledException.class)
+    public ResponseEntity<StandardError> userDisabledException(UserDisabledException userDisabled) {
+        StandardError errorMessage = new StandardError(System.currentTimeMillis(), HttpStatus.UNAUTHORIZED.value(), userDisabled.getMessage());
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(errorMessage);
+    }
+
+    @ExceptionHandler(CredentialInvalidException.class)
+    public ResponseEntity<StandardError> credentialInvalidException(CredentialInvalidException credentialInvalid) {
+        StandardError errorMessage = new StandardError(System.currentTimeMillis(), HttpStatus.UNAUTHORIZED.value(), credentialInvalid.getMessage());
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(errorMessage);
+    }
+
 }
