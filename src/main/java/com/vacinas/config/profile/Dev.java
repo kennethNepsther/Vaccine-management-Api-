@@ -1,4 +1,4 @@
-package com.vacinas.config;
+package com.vacinas.config.profile;
 
 import com.vacinas.enums.VaccineIntakeRoute;
 import com.vacinas.model.RoleModel;

@@ -10,7 +10,6 @@ import lombok.AllArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
@@ -22,7 +21,7 @@ import static com.vacinas.util.UriUtil.addIdToCurrentUrlPath;
 @AllArgsConstructor
 @CrossOrigin(origins = "*")
 @RequestMapping("/v1/user")
-@PreAuthorize("hasRole('ADMIN')")
+//@PreAuthorize("hasRole('ADMIN')")
 public class UserController {
 
     final UserService userService;
