@@ -39,7 +39,7 @@ public class UserServiceImpl implements UserService {
         UserModel user = userRepository.finByUsernameFetchRoles(username);
 
         if (Assert.isNull(user)) {
-            throw new ObjectNotFoundException("Não existe este utilizador");
+            throw new ObjectNotFoundException("Utilizador Inválido");
 
         }
         return user;
