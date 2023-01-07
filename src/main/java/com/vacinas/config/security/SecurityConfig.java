@@ -7,6 +7,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -15,8 +16,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @EnableWebSecurity
-//@EnableMethodSecurity
 @AllArgsConstructor
+@EnableMethodSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
     final CustomUserDetailsService customUserDetailsService;
     final CustomJwtAuthenticationFilter customJwtAuthenticationFilter;
@@ -35,21 +36,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
 
- /*   @Override
-    protected void configure(HttpSecurity http) throws Exception {
-        http.csrf().disable()
-                .authorizeRequests()
-                .antMatchers("/api.vaccine-system/auth").permitAll().anyRequest().authenticated()
-                //.antMatchers("/api.vaccine-system/**").permitAll().anyRequest().authenticated()
-                .and()
-                .httpBasic();
-    }*/
-
     @Override
     public void configure(HttpSecurity http) throws Exception {
         http.csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/auth").permitAll().anyRequest().authenticated()
+                .antMatchers("/auth","/home").permitAll().anyRequest().authenticated()
                 .and().exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint)
                 .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and().addFilterBefore(customJwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);

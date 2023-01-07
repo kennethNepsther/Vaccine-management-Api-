@@ -17,6 +17,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+import static org.springframework.http.HttpHeaders.AUTHORIZATION;
+
 @Component
 @AllArgsConstructor
 public class CustomJwtAuthenticationFilter extends OncePerRequestFilter {
@@ -25,30 +27,30 @@ public class CustomJwtAuthenticationFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
             throws ServletException, IOException {
-        try{
-        String jwtToken = extractJwtFromRequest(request);
+        try {
+            String jwtToken = extractJwtFromRequest(request);
 
-        if (StringUtils.hasText(jwtToken) && jwtUtil.validateToken(jwtToken)) {
-            UserDetails userDetails = new User(jwtUtil.getUsernameFromToken(jwtToken), "",
-                    jwtUtil.getRolesFromToken(jwtToken));
+            if (StringUtils.hasText(jwtToken) && jwtUtil.validateToken(jwtToken)) {
+                UserDetails userDetails = new User(jwtUtil.getUsernameFromToken(jwtToken), "",
+                        jwtUtil.getRolesFromToken(jwtToken));
 
-            UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken
-                    = new UsernamePasswordAuthenticationToken(
-                    userDetails, null, userDetails.getAuthorities());
+                UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken
+                        = new UsernamePasswordAuthenticationToken(
+                        userDetails, null, userDetails.getAuthorities());
 
-            SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
-        } else {
+                SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
+            } else {
 
-            logger.warn("Não foi possível definir o contexto de segurança");
-        }
-        }catch(ExpiredJwtException | BadCredentialsException ex)
-        {
+                logger.warn("Não foi possível definir o contexto de segurança");
+            }
+        } catch (ExpiredJwtException | BadCredentialsException ex) {
             request.setAttribute("exception", ex);
         }
         chain.doFilter(request, response);
     }
+
     private String extractJwtFromRequest(HttpServletRequest request) {
-        String bearerToken = request.getHeader("Authorization");
+        String bearerToken = request.getHeader(AUTHORIZATION);
         if (StringUtils.hasText(bearerToken) && bearerToken.startsWith("Bearer ")) {
             return bearerToken.substring(7);
         }
