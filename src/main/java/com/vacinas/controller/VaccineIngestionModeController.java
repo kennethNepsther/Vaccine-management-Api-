@@ -4,6 +4,7 @@ import com.vacinas.model.VaccineIngestionModeModel;
 import com.vacinas.service.VaccineIngestionModeService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -13,7 +14,7 @@ import java.util.List;
 @RestController
 @AllArgsConstructor
 @CrossOrigin(origins = "*")
-//@PreAuthorize("hasRole('ADMIN')")
+@PreAuthorize("hasRole('ADMIN')")
 @RequestMapping("/v1/ingestion")
 public class VaccineIngestionModeController {
 

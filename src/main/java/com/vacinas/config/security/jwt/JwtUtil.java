@@ -49,13 +49,12 @@ public class JwtUtil {
 
     public boolean validateToken(String authToken) {
         try {
-            // Jwt token has not been tampered with
+
             Jws<Claims> claims = Jwts.parser().setSigningKey(secret).parseClaimsJws(authToken);
             return true;
         } catch (SignatureException | MalformedJwtException | UnsupportedJwtException | IllegalArgumentException ex) {
             throw new BadCredentialsException("INVALID_CREDENTIALS", ex);
         } catch (ExpiredJwtException ex) {
-            //throw new ex(header, claims, "Token has Expired", ex);
             throw  ex;
         }
     }
@@ -72,10 +71,10 @@ public class JwtUtil {
         Boolean isAdmin = claims.get("isAdmin", Boolean.class);
         Boolean isUser = claims.get("isUser", Boolean.class);
         if (isAdmin != null && isAdmin) {
-            roles = Arrays.asList(new SimpleGrantedAuthority("ROLE_ADMIN"));
+            roles = List.of(new SimpleGrantedAuthority("ROLE_ADMIN"));
         }
         if (isUser != null && isUser) {
-            roles = Arrays.asList(new SimpleGrantedAuthority("ROLE_USER"));
+            roles = List.of(new SimpleGrantedAuthority("ROLE_USER"));
         }
         return roles;
     }
