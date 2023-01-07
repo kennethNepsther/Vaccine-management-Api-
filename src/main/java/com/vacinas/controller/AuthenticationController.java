@@ -6,6 +6,7 @@ import com.vacinas.exception.UserDisabledException;
 import com.vacinas.model.dto.request.AuthenticationRequest;
 import com.vacinas.model.dto.response.AuthenticationResponse;
 import com.vacinas.service.impl.CustomUserDetailsService;
+import io.jsonwebtoken.impl.DefaultClaims;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -13,13 +14,15 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletRequest;
+import java.util.HashMap;
+import java.util.Map;
 
 @RestController
 @AllArgsConstructor
+@RequestMapping
 public class AuthenticationController {
     final CustomUserDetailsService userDetailsService;
 
@@ -27,7 +30,7 @@ public class AuthenticationController {
 
     final JwtUtil jwtUtil;
 
-    @RequestMapping(value ="/auth" , method = RequestMethod.POST)
+    @PostMapping(value ="/auth" )
     public ResponseEntity<?> authenticateUser(@RequestBody AuthenticationRequest authenticationRequest) {
         try {
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
@@ -40,6 +43,20 @@ public class AuthenticationController {
          UserDetails userDetails = userDetailsService.loadUserByUsername(authenticationRequest.getUsername());
          String token = jwtUtil.generateToken(userDetails);
         return ResponseEntity.ok(new AuthenticationResponse(token));
+    }
+
+    @GetMapping(value = "/refreshtoken")
+    public ResponseEntity<?> refreshToken(HttpServletRequest request) {
+        // From the HttpRequest get the claims
+        DefaultClaims claims = (io.jsonwebtoken.impl.DefaultClaims) request.getAttribute("claims");
+
+        Map<String, Object> expectedMap = getMapFromIoJsonwebtokenClaims(claims);
+        String token = jwtUtil.doGenerateRefreshToken(expectedMap, expectedMap.get("sub").toString());
+        return ResponseEntity.ok(new AuthenticationResponse(token));
+    }
+
+    public Map<String, Object> getMapFromIoJsonwebtokenClaims(DefaultClaims claims) {
+        return new HashMap<>(claims);
     }
 
 }
