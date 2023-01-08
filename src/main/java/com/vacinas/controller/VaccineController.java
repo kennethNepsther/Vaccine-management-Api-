@@ -6,10 +6,11 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
 import java.util.List;
+
+import static com.vacinas.util.UriUtil.addIdToCurrentUrlPath;
 
 @RestController
 @AllArgsConstructor
@@ -43,7 +44,7 @@ public class VaccineController {
     @PostMapping
     public ResponseEntity<VaccineModel> create(@RequestBody VaccineModel vaccine){
         vaccine = vaccineService.create(vaccine);
-        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(vaccine.getId()).toUri();
+        URI uri = addIdToCurrentUrlPath(vaccine.getId());
         return ResponseEntity.created(uri).body(vaccine);
     }
 
