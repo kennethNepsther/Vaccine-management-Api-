@@ -27,7 +27,7 @@ public class AssignRolesToUserServiceImpl implements AssignRolesToUserService {
                 throw new DataIntegrityViolationException("Permissão já existente");
             }
 
-            roles = userRoleDTO.getIdsRoles().stream().map(RoleModel::new).collect(Collectors.toList());
+            roles = userRoleDTO.getRoleIdList().stream().map(RoleModel::new).collect(Collectors.toList());
 
 
             UserModel userModel = userExists.get();

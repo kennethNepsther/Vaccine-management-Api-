@@ -49,7 +49,7 @@ public class UserServiceImpl implements UserService {
     public void findByUsername(String username) {
         UserModel user = userRepository.findByUsername(username.trim());
         if (Assert.isNotNull(user)) {
-            throw new DataIntegrityViolationException("Já  existe um utilizador com este user name");
+            throw new DataIntegrityViolationException("Já  existe um utilizador com este username "+ user.getUsername());
         }
 
     }
@@ -63,10 +63,15 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserModel update(UserModel userModel) {
-        findById(userModel.getId());
-        findByUsername(userModel.getUsername());
-        return userRepository.save(userModel);
+    public UserModel update(UserModel user) {
+        findById(user.getId());
+        findByUsername(user.getUsername());
+        UserModel oldData =  findById(user.getId());
+
+        if (!user.getPassword().equals(oldData.getPassword()))
+            user.setPassword( new BCryptPasswordEncoder().encode( user.getPassword()));
+
+        return userRepository.save(user);
     }
 
 

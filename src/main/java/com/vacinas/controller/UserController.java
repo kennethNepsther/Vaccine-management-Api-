@@ -7,7 +7,6 @@ import com.vacinas.model.dto.response.UserResponseDto;
 import com.vacinas.service.AssignRolesToUserService;
 import com.vacinas.service.UserService;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.BeanUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -42,29 +41,26 @@ public class UserController {
     }
 
     @PostMapping
-    public ResponseEntity<UserModel> create(@RequestBody UserRequestDto userRequestDto){
-        UserModel userModel = userService.create(userRequestDto.build());
+    public ResponseEntity<UserModel> create(@RequestBody UserRequestDto userDTO) {
+        UserModel userModel = userService.create(userDTO.build());
         URI uri = addIdToCurrentUrlPath(userModel.getId());
         return ResponseEntity.created(uri).body(userModel);
     }
 
     @PostMapping("/set-role")
-    public ResponseEntity<UserModel> setUserRole(@RequestBody UserRoleDTO userRoleDto){
+    public ResponseEntity<UserModel> setUserRole(@RequestBody UserRoleDTO userRoleDto) {
         return ResponseEntity.ok().body(assignRolesToUserService.execute(userRoleDto));
     }
 
     @PutMapping
-    public ResponseEntity<UserModel> update(@RequestBody  UserRequestDto userRequestDto){
-        var userModel = new UserModel();
-        BeanUtils.copyProperties(userRequestDto, userModel);
-        userModel.setId(userRequestDto.getId());
-        userModel.setName(userRequestDto.getName());
-        userModel.setUsername(userRequestDto.getUsername());
-        return ResponseEntity.ok().body(userService.update(userModel));
+    public ResponseEntity<UserModel> update(@RequestBody UserRequestDto userDTO) {
+        var user = new UserModel();
+        UserRequestDto.update(userDTO, user);
+        return ResponseEntity.ok().body(userService.update(user));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Object> delete(@PathVariable Long id){
+    public ResponseEntity<Object> delete(@PathVariable Long id) {
         userService.delete(id);
         //return ResponseEntity.noContent().build();
         return ResponseEntity.status(HttpStatus.OK).body("Eliminado com sucesso.");
