@@ -9,8 +9,11 @@ import com.vacinas.util.Assert;
 import lombok.AllArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ReflectionUtils;
 
+import java.lang.reflect.Field;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -73,6 +76,22 @@ public class UserServiceImpl implements UserService {
 
         return userRepository.save(user);
     }
+
+    @Override
+    public UserModel updateUserByFields(Long id, Map<String, Object> fields) {
+        Optional<UserModel> existingUser = userRepository.findById(id);
+
+        if (existingUser.isPresent()) {
+            fields.forEach((key, value) -> {
+                Field field = ReflectionUtils.findField(UserModel.class, key);
+                field.setAccessible(true);
+                ReflectionUtils.setField(field, existingUser.get(), value);
+            });
+            return userRepository.save(existingUser.get());
+        }
+        return null;
+    }
+
 
 
     @Override

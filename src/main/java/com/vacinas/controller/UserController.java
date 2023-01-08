@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 import java.util.List;
+import java.util.Map;
 
 import static com.vacinas.util.UriUtil.addIdToCurrentUrlPath;
 
@@ -57,6 +58,11 @@ public class UserController {
         var user = new UserModel();
         UserRequestDto.update(userDTO, user);
         return ResponseEntity.ok().body(userService.update(user));
+    }
+
+    @PatchMapping("/{id}")
+    public ResponseEntity<UserModel> updateUserByFields(@PathVariable Long id, @RequestBody Map<String, Object> fields){
+        return ResponseEntity.ok().body(userService.updateUserByFields(id, fields));
     }
 
     @DeleteMapping("/{id}")
