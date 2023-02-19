@@ -1,6 +1,7 @@
 package com.vacinas.controller;
 
 import com.vacinas.model.VaccineModel;
+import com.vacinas.model.dto.request.VaccineRequestDto;
 import com.vacinas.service.VaccineService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -42,8 +43,8 @@ public class VaccineController {
     }
 
     @PostMapping
-    public ResponseEntity<VaccineModel> create(@RequestBody VaccineModel vaccine){
-        vaccine = vaccineService.create(vaccine);
+    public ResponseEntity<VaccineModel> create(@RequestBody VaccineRequestDto vaccineDto){
+        VaccineModel vaccine = vaccineService.create(vaccineDto.build());
         URI uri = addIdToCurrentUrlPath(vaccine.getId());
         return ResponseEntity.created(uri).body(vaccine);
     }

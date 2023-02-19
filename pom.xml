@@ -14,7 +14,7 @@
 	<name>vaccine</name>
 	<description>Vaccine-management-system-Api-</description>
 	<properties>
-		<java.version>11</java.version>
+		<java.version>17</java.version>
 	</properties>
 	<dependencies>
 		<dependency>

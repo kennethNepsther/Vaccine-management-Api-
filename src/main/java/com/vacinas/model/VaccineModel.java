@@ -3,10 +3,12 @@ package com.vacinas.model;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.vacinas.enums.VaccineIntakeRoute;
 import lombok.*;
+import lombok.experimental.Accessors;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -16,6 +18,7 @@ import java.util.List;
 @Table(name = "vaccine")
 @AllArgsConstructor
 @NoArgsConstructor
+@Accessors(chain = true)
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class VaccineModel implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -37,13 +40,15 @@ public class VaccineModel implements Serializable {
     @Column(nullable = false)
     @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate expirationDate;
-
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private VaccineIntakeRoute intakeRoute;
 
-    @OneToMany(mappedBy = "vaccine", cascade = CascadeType.ALL)
-    private List<VaccineIngestionModeModel> ingestionModes;
+    @Column(nullable = false)
+    private String vaccinationSchedule;
+    private String ingestionMode;
+    @OneToMany(mappedBy = "patient",cascade = CascadeType.REMOVE)
+    private List<SchedulingModel> schedulingList = new ArrayList<>();
 
 
 
