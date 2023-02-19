@@ -8,6 +8,7 @@ import lombok.experimental.Accessors;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -39,16 +40,15 @@ public class VaccineModel implements Serializable {
     @Column(nullable = false)
     @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate expirationDate;
-
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private VaccineIntakeRoute intakeRoute;
 
     @Column(nullable = false)
     private String vaccinationSchedule;
-
-
     private String ingestionMode;
+    @OneToMany(mappedBy = "patient",cascade = CascadeType.REMOVE)
+    private List<SchedulingModel> schedulingList = new ArrayList<>();
 
 
 

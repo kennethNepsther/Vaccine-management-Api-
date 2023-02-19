@@ -1,14 +1,9 @@
 package com.vacinas.config.profile;
 
 import com.vacinas.enums.VaccineIntakeRoute;
-import com.vacinas.model.RoleModel;
-import com.vacinas.model.UserModel;
-import com.vacinas.model.VaccineModel;
-import com.vacinas.repository.RoleRepository;
-import com.vacinas.repository.UserRepository;
-import com.vacinas.repository.VaccineRepository;
+import com.vacinas.model.*;
+import com.vacinas.repository.*;
 import com.vacinas.util.DateTimeUtil;
-import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
@@ -18,7 +13,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import java.security.SecureRandom;
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Random;
 
 import static java.util.Arrays.asList;
 
@@ -28,6 +22,8 @@ public class Dev {
     final UserRepository userRepository;
     final RoleRepository roleRepository;
     final VaccineRepository vaccineRepository;
+    final SchedulingRepository schedulingRepository;
+    final PatientRepository patientRepository;
 
     String[] vaccineName = {"BCG", "Hepatite B", "Penta", "Polio inativada", "Polio oral", "Rotavírus",
             "Pneumocócica 10-valente", "Meningocócica C", "Febre amarela",
@@ -35,14 +31,18 @@ public class Dev {
 
     VaccineIntakeRoute[] intakeRoute = {VaccineIntakeRoute.ORAL, VaccineIntakeRoute.INTRADÉRMICA,
             VaccineIntakeRoute.SUBCUTÂNEA, VaccineIntakeRoute.INTRAMUSCULAR};
-    String schedule = "Lorem Ipsum is simply dummy text ";
+    String schedule0 = "Lorem Ipsum is simply dummy text ";
     String description = "dummy text of the printing and typesetting industry.";
     LocalDate manufactureDate = LocalDate.now();
     LocalDate expirationDate = manufactureDate.plusYears(8);
-    public Dev(VaccineRepository vaccineRepository,UserRepository userRepository, RoleRepository roleRepository) {
+    public Dev(VaccineRepository vaccineRepository,UserRepository userRepository,
+               RoleRepository roleRepository, SchedulingRepository schedulingRepository,
+               PatientRepository patientRepository) {
         this.vaccineRepository = vaccineRepository;
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
+        this.schedulingRepository = schedulingRepository;
+        this.patientRepository = patientRepository;
     }
 
 
@@ -66,9 +66,15 @@ public class Dev {
             int n3 = random.nextInt(4);
 
            var vaccine = new VaccineModel(null, vaccineName[n1],description, Integer.toString(allotment), "PANAMA", DateTimeUtil.getCurrentDate(),expirationDate,
-                   intakeRoute[n3], schedule, "bla bla bla");
-
+                   intakeRoute[n3], schedule0, "bla bla bla",null);
             vaccineRepository.save(vaccine);
+
+            var patient = new PatientModel(null,Integer.toString(allotment),vaccineName[n1],DateTimeUtil.getCurrentDate(), null );
+            patientRepository.save(patient);
+
+            var schedule = new SchedulingModel(null,DateTimeUtil.getCurrentDate(),DateTimeUtil.getCurrentTime(),"LUANDA",patient,vaccine);
+          schedulingRepository.save(schedule);
+
 
 
         }
