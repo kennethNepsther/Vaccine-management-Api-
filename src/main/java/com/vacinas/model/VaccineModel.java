@@ -6,6 +6,7 @@ import lombok.*;
 import lombok.experimental.Accessors;
 
 import javax.persistence.*;
+import java.io.Serial;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -21,6 +22,7 @@ import java.util.List;
 @Accessors(chain = true)
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class VaccineModel implements Serializable {
+    @Serial
     private static final long serialVersionUID = 1L;
     @Id
     @EqualsAndHashCode.Include

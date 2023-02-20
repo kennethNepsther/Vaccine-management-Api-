@@ -25,7 +25,6 @@ import java.util.List;
 @AllArgsConstructor
 public class VaccineRequestDto {
 
-    private Long id;
     @NotBlank
     @Size(min = 3, max = 20)
     @NotNull(message = "O nome é obrigatório")
@@ -85,7 +84,7 @@ public class VaccineRequestDto {
 
     public static void update(VaccineRequestDto vaccineRequestDto, VaccineModel vaccineModel){
         BeanUtils.copyProperties(vaccineRequestDto, vaccineModel);
-        vaccineModel.setId(vaccineRequestDto.getId());
+        //vaccineModel.setId(vaccineRequestDto.getId());
         vaccineModel.setName(vaccineRequestDto.getName());
         vaccineModel.setDescription(vaccineRequestDto.getDescription());
         vaccineModel.setIntakeRoute(vaccineRequestDto.getIntakeRoute());

@@ -59,7 +59,7 @@ public class Dev {
 
         var random = new SecureRandom();
 
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 3; i++) {
 
             int n1 = random.nextInt(10);
             int allotment = random.nextInt();

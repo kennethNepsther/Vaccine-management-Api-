@@ -1,6 +1,7 @@
 package com.vacinas.model;
 
 import lombok.*;
+import lombok.experimental.Accessors;
 import org.w3c.dom.stylesheets.LinkStyle;
 
 import javax.persistence.*;
@@ -13,9 +14,10 @@ import java.util.List;
 @Getter
 @Setter
 @Entity
-@Table(name = "patient")
 @NoArgsConstructor
 @AllArgsConstructor
+@Accessors(chain = true)
+@Table(name = "patient")
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class PatientModel implements Serializable {
     @Serial
@@ -24,8 +26,11 @@ public class PatientModel implements Serializable {
     @EqualsAndHashCode.Include
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(nullable = false, unique = true)
     private String idNumber;
+    @Column(nullable = false)
     private String fullName;
+    @Column(nullable = false)
     private LocalDate brithDate;
     @OneToMany(mappedBy = "patient",cascade = CascadeType.REMOVE)
     private List<SchedulingModel> schedulingList = new ArrayList<>();
