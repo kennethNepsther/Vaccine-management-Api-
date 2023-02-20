@@ -2,6 +2,7 @@ package com.vacinas.controller;
 
 import com.vacinas.model.PatientModel;
 import com.vacinas.model.VaccineModel;
+import com.vacinas.model.dto.request.PatientRequestDto;
 import com.vacinas.model.dto.request.VaccineRequestDto;
 import com.vacinas.service.PatientService;
 import com.vacinas.service.VaccineService;
@@ -39,12 +40,12 @@ public class PatientController {
 
 
 
-//    @PostMapping
-//    public ResponseEntity<PatientModel> create(@RequestBody PatientRequestDto patientDto){
-//        PatientModel patient = patientService.create(patientDto.build());
-//        URI uri = addIdToCurrentUrlPath(patient.getId());
-//        return ResponseEntity.created(uri).body(patient);
-//    }
+    @PostMapping
+    public ResponseEntity<PatientModel> create(@RequestBody PatientRequestDto patientDto){
+        PatientModel patient = patientService.create(patientDto.build());
+        URI uri = addIdToCurrentUrlPath(patient.getId());
+        return ResponseEntity.created(uri).body(patient);
+    }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id){
